@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mud Cups</title>
+
+<!-- Premium Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;cursor:none}
+
+/* Premium Cursor */
+.cursor{
+  width:18px;
+  height:18px;
+  border:2px solid rgba(245,214,180,0.9);
+  border-radius:50%;
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:9999;
+  backdrop-filter: blur(4px);
+  animation:cursorPulse 2s infinite ease-in-out;
+}
+
+@keyframes cursorPulse{
+  0%{box-shadow:0 0 0 rgba(245,214,180,0.4)}
+  50%{box-shadow:0 0 20px rgba(245,214,180,0.8)}
+  100%{box-shadow:0 0 0 rgba(245,214,180,0.4)}
+}
+
+.cursor-follower{
+  width:40px;
+  height:40px;
+  background:rgba(196,122,44,0.15);
+  border-radius:50%;
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition:transform 0.15s ease;
+  z-index:9998;
+}
+
+.cursor-grow{
+  transform:translate(-50%,-50%) scale(1.8);
+  background:rgba(245,214,180,0.2);
+}
+
+.cursor-grow{
+  transform:translate(-50%,-50%) scale(2);
+  background:rgba(245,214,180,0.1);
+}
+
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  letter-spacing:1px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  background:linear-gradient(135deg,#f5d6b4,#c47a2c,#fff3e0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.logo-box{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:10px;
+}
+
+body{
+  background:linear-gradient(135deg,#2c1c12,#5a3e2b,#c47a2c);
+  color:#fff;
+  scroll-behavior:smooth;
+}
+
+header{
+  position:sticky;top:0;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 60px;
+  backdrop-filter: blur(15px);
+  background:rgba(0,0,0,0.4);
+}
+
+.logo{font-size:28px;font-weight:700;letter-spacing:3px;color:#f5d6b4}
+
+nav a{margin:0 15px;text-decoration:none;color:#ddd;transition:.3s}
+nav a:hover{color:#f5d6b4}
+
+.btn{
+  background:linear-gradient(135deg,#1f6f5a,#2e8b75,#3aa58c);
+  padding:10px 22px;border-radius:30px;
+  text-decoration:none;color:#fff;
+  transition:.3s;
+}
+
+.hero{text-align:center;padding:130px 20px}
+.hero h1{font-size:55px;margin-bottom:15px}
+.hero p{color:#eee;margin-bottom:25px}
+
+/* IMAGE PLACEHOLDERS */
+.img{
+  height:170px;
+  width: 100%;
+  background:#3b2a20;
+  border-radius:15px;
+  margin-bottom:15px;
+  display:flex;align-items:center;justify-content:center;
+  color:#aaa;font-size:14px;
+}
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Keeps aspect ratio while filling the space */
+}
+
+.cafe-img{
+  width:85%;
+  margin:50px auto;
+  height:350px;
+  border-radius:25px;
+  overflow:hidden; /* important */
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.cafe-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:25px;
+}
+
+@media (max-width:768px){
+  .cafe-img{
+    height:220px;
+  }
+}
+
+.section{padding:80px 60px;text-align:center}
+.section h2{margin-bottom:50px;font-size:34px;color:#f5d6b4}
+
+.cards{display:flex;flex-wrap:wrap;gap:30px;justify-content:center}
+
+.card{
+  width:270px;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#1f6f5a,#2e8b75,#3aa58c); /* green theme */
+  backdrop-filter: blur(15px);
+  border:1px solid rgba(255,255,255,0.15);
+  transition:.4s;
+}
+
+.card:hover{transform:translateY(-12px) scale(1.03)}
+
+.menu-details{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease;
+  text-align:left;font-size:14px;color:#eee;margin-top:10px;
+}
+
+.card:hover .menu-details{max-height:200px}
+
+/* INSTAGRAM */
+.insta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.insta .box{
+  height:180px;border-radius:15px;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;color:#aaa
+}
+
+/* VISIT SECTION PREMIUM */
+.visit{
+  display:flex;flex-wrap:wrap;gap:40px;align-items:center;
+  background:rgba(0,0,0,0.4);
+  padding:40px;border-radius:25px;
+  backdrop-filter: blur(15px);
+}
+
+.visit-left{flex:1;text-align:left}
+.visit-left h3{margin-bottom:15px;color:#f5d6b4}
+.visit-left p{margin:10px 0;color:#ddd}
+
+.visit-right{flex:1}
+.map{
+  width:100%;height:250px;border-radius:20px;
+  background:#2b2b2b;
+  display:flex;align-items:center;justify-content:center;color:#aaa
+}
+
+footer{text-align:center;padding:25px;background:#1a1a1a;color:#ccc}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">
+        <img src="C:\Users\MANASA\Downloads\logo1.jpg" alt="Logo" width="70px" height="70px">
+    </div>
+    <div class="logo-text">  Mud Cups</div>
+  </div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#order" class="btn">Order Now</a>
+</header>
+
+<section class="hero">
+  <h1>Premium Café Experience</h1>
+  <p>Where aesthetic meets flavor. Chill, click & enjoy Mud Cups.</p>
+  <a href="#menu" class="btn">Explore Menu</a>
+</section>
+
+<div class="cafe-img">
+    <img src="C:\Users\MANASA\Downloads\homepage.jpg" alt="Cafe Image" width="85%" height="350px">
+</div>
+
+<section id="menu" class="section">
+  <h2>Our Menu</h2>
+
+  <!-- Each ITEM is a separate card -->
+  <div class="cards">
+
+    <!-- TEA ITEMS -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\normaltea.jpg">
+    </div><h3>Normal Tea</h3><p>₹15 / ₹30</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\gingertea.png">
+    </div><h3>Ginger Tea</h3><p>₹22 / ₹45</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/masalatea.webp">
+    </div><h3>Masala Tea</h3><p>₹22 / ₹45</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\greentea.png">
+    </div><h3>Green Tea</h3><p>₹15 / ₹29</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\lemontea.jpg">
+    </div><h3>Lemon Tea</h3><p>₹20</p></div>
+
+    <!-- SANDWICH -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\vegsandwich.avif">
+    </div><h3>Veg Sandwich</h3><p>₹59</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/eggsandwich.webp">
+    </div><h3>Egg Sandwich</h3><p>₹79</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\paneersandwich.jpg">
+    </div><h3>Paneer Sandwich</h3><p>₹89</p></div>
+
+    <!-- ROLLS -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\vegroll.jpg">
+    </div><h3>Veg Roll</h3><p>₹69</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\eggroll.jpg">
+    </div><h3>Egg Roll</h3><p>₹79</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\paneerroll.jpg">
+    </div><h3>Paneer Roll</h3><p>₹89</p></div>
+
+    <!-- BURGERS -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\alootikkiburger.jpg">
+    </div><h3>Aloo Tikki Burger</h3><p>₹59</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/vegburger.webp">
+    </div><h3>Veg Burger</h3><p>₹69</p></div>
+
+    <!-- MILKSHAKES -->
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/chocolateshake.webp">
+    </div><h3>Chocolate Shake</h3><p>₹69</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/oreoshake.webp">
+    </div><h3>Oreo Shake</h3><p>₹79</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\mangoshake.jpg">
+    </div><h3>Mango Shake</h3><p>₹69</p></div>
+
+    <!-- PIZZA -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\vegpizza.jpg">
+    </div><h3>Veg Pizza</h3><p>₹99</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\paneerpizza.avif">
+    </div><h3>Paneer Pizza</h3><p>₹129</p></div>
+
+    <!-- PASTA -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\whitesaucepasta.jpg">
+    </div><h3>White Sauce Pasta</h3><p>₹99</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/redsaucepasta.webp">
+    </div><h3>Red Sauce Pasta</h3><p>₹99</p></div>
+
+    <!-- SIDES -->
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\frenchfries.jpg">
+    </div><h3>French Fries</h3><p>₹59</p></div>
+    <div class="card"><div class="img">
+        <img src="C:\Users\MANASA\Downloads\periperifries.jpg">
+    </div><h3>Peri Peri Fries</h3><p>₹69</p></div>
+    <div class="card"><div class="img">
+        <img src="file:///C:/Users/MANASA/Downloads/nuggets.webp">
+    </div><h3>Nuggets</h3><p>₹89</p></div>
+
+  </div>
+  <br>
+  <p style="margin-bottom:20px;color:#ddd">
+    Disclaimer: Menu items and prices are subject to change. Please check with the cafe for the latest offerings and pricing. And also note the images are for refference only and may not represent the actual dishes served.
+  </p>
+  <br>
+</section>
+
+<section id="order" class="section">
+    <p>-------------------------------------------------------------------------------------------------------</p>
+  <h2>Order Now</h2>
+  <p style="margin-bottom:20px;color:#ddd">
+    Order your favorites from your preferred platform
+  </p>
+  <p>-------------------------------------------------------------------------------------------------------</p>
+
+  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap">
+    <!-- Zomato -->
+    <a href="https://www.zomato.com/coimbatore/mud-cups-podanur/order" target="_blank">
+      <div class="img" style="width:140px;height:100px">
+        <img src="C:\Users\MANASA\Downloads\zomato.jpg" alt="Zomato Logo" width="140px" height="100px">
+      </div>
+    </a>
+
+    <!-- Swiggy -->
+    <a href="https://www.swiggy.com/" target="_blank">
+      <div class="img" style="width:140px;height:100px">
+        <img src="C:\Users\MANASA\Downloads\swiggy.png" alt="Swiggy Logo" width="140px" height="100px">
+      </div>
+    </a>
+
+    </div>
+</section>
+
+<section class="section">
+  <h2>Instagram</h2>
+  <p style="margin-bottom:20px;color:#ddd">Follow us:<strong>@mudcups_coimbatore</strong></p>
+  <div class="insta">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig1.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig2.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig3.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig4.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig5.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig6.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig7.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig8.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig9.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  <div class="box"></div>
+    <img src="C:\Users\MANASA\Downloads\ig10.jpeg" alt="Insta Image" style="width:100%;height:100%;object-fit:cover;border-radius:15px">
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <h2>Visit Us</h2>
+
+  <div class="visit">
+    <div class="visit-left">
+      <h3>Mud Cups Cafe</h3>
+      <p><strong>258, Kovaipudur Main Rd, near VLB college Back Gate</strongp>
+      <p><strong>Gokulam Colony, Kulathupalayam, Kovaipudur</strong></p>
+      <p><strong>Tamil Nadu 641042</strong></p>
+      <br>
+      <p>CALL: <strong>063822 43440</strong></p>
+      <br>
+      <p>Working Hours: <strong>9:30 AM – 10:30 PM (Everyday)</strong></p>
+      <br>
+      <p>Reviews: <strong>4.8/5 Rating</strong></p>
+      <br>
+      
+    </div>
+
+    <div class="visit-right">
+      <div class="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.310048127759!2d76.94382430000002!3d10.9399356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85b4aa6f47aa1%3A0xf6ac09aec0585929!2sMud%20Cups%2C%20Coimbatore!5e0!3m2!1sen!2sin!4v1773939360876!5m2!1sen!2sin" width="700" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2026 Mud Cups</p>
+</footer>
+
+
+<!-- Custom Cursor Element -->
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
+<script>
+const cursor = document.querySelector('.cursor');
+const follower = document.querySelector('.cursor-follower');
+
+let mouseX = 0, mouseY = 0;
+let posX = 0, posY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  if(cursor){
+    cursor.style.top = mouseY + 'px';
+    cursor.style.left = mouseX + 'px';
+  }
+});
+
+function animate(){
+  posX += (mouseX - posX) * 0.15;
+  posY += (mouseY - posY) * 0.15;
+
+  if(follower){
+    follower.style.top = posY + 'px';
+    follower.style.left = posX + 'px';
+  }
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+const hoverElements = document.querySelectorAll('a, .card, .btn, h1, h2, h3');
+
+hoverElements.forEach((el) => {
+  el.addEventListener('mouseenter', () => {
+    if(cursor) cursor.classList.add('cursor-grow');
+    if(follower) follower.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    el.style.transition = 'transform 0.3s ease';
+  });
+
+  el.addEventListener('mousemove', (e) => {
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+  });
+
+  el.addEventListener('mouseleave', () => {
+    if(cursor) cursor.classList.remove('cursor-grow');
+    if(follower) follower.style.transform = 'translate(-50%,-50%) scale(1)';
+    el.style.transform = 'translate(0,0)';
+  });
+});
+</script>
+
+</body>
+</html>
